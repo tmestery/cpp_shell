@@ -58,6 +58,14 @@ void parse(std::string inputString) {
 
     if (command == "exit") {
         exit(0);
+    } else if (command == "help") {
+        std::cout << "Available commands:" << std::endl;
+        std::cout << "  cd <path>   - change directory" << std::endl;
+        std::cout << "  pwd         - print working directory" << std::endl;
+        std::cout << "  echo <text> - print text" << std::endl;
+        // std::cout << "  history     - show command history" << std::endl;
+        std::cout << "  exit        - quit the shell" << std::endl;
+        std::cout << "  <command>   - runs any system command (ls, grep, cat, etc.)" << std::endl;
     } else if (command == "pwd") {
         char cwd[1024];
         getcwd(cwd, sizeof(cwd));
