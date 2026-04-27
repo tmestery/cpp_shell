@@ -14,6 +14,7 @@ make
 - `ls` - list directory contents
 - `cat` - print file contents
 - `mkdir` - create a directory
+- `<command>`   - runs any system command (ls, grep, cat, etc.)
 
 ## Author
 @tmestery - Tyler Mestery
