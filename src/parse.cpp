@@ -39,6 +39,10 @@ void handlePiping(std::string left, std::string right) {
 void parse(std::string inputString) {
     if (inputString.empty()) return;
 
+    // Remote whitespace
+    inputString.erase(0, inputString.find_first_not_of(" \t\n"));
+    inputString.erase(inputString.find_last_not_of(" \t\n") + 1);
+
     // check for pipe
     size_t pipePos = inputString.find('|');
     if (pipePos != std::string::npos) {
