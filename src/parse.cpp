@@ -5,6 +5,7 @@
 #include <sys/wait.h>
 #include "parse.h"
 
+// handles piping commands
 void handlePiping(std::string left, std::string right) {
     int fd[2];
     pipe(fd);  // fd[0] = read end, fd[1] = write end
@@ -36,8 +37,13 @@ void handlePiping(std::string left, std::string right) {
     wait(nullptr);
 }
 
+// parses for command
 void parse(std::string inputString) {
+    // does nothing if empty
     if (inputString.empty()) return;
+
+    // shell does nothing if user hits enter
+    if (inputString.find_first_not_of(" \t\n") == std::string::npos) return;
 
     // Remote whitespace
     inputString.erase(0, inputString.find_first_not_of(" \t\n"));
@@ -56,6 +62,7 @@ void parse(std::string inputString) {
     std::string command;
     lineStream >> command;
 
+    // checks for command
     if (command == "exit") {
         exit(0);
     } else if (command == "help") {
