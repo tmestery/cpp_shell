@@ -5,6 +5,20 @@
 #include <sys/wait.h>
 #include "parse.h"
 
+// handles enviornment var
+void expandEnvVars(std::string& input) {
+    size_t pos = input.find('$');
+    while (pos != std::string::npos) {
+        size_t end = input.find_first_of(" \t\n", pos);
+        std::string varName = input.substr(pos + 1, end - pos - 1);
+        const char* value = getenv(varName.c_str());
+        if (value) {
+            input.replace(pos, end - pos, value);
+        }
+        pos = input.find('$', pos + 1);
+    }
+}
+
 // handles piping commands
 void handlePiping(std::string left, std::string right) {
     int fd[2];
@@ -44,6 +58,8 @@ void parse(std::string inputString) {
 
     // shell does nothing if user hits enter
     if (inputString.find_first_not_of(" \t\n") == std::string::npos) return;
+
+    expandEnvVars(inputString);
 
     // Remote whitespace
     inputString.erase(0, inputString.find_first_not_of(" \t\n"));
